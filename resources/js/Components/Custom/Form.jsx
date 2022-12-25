@@ -3,6 +3,7 @@ import { Inertia } from "@inertiajs/inertia";
 import { useForm } from "@inertiajs/inertia-react";
 export default function Form(props) {
     let classValue;
+
     const [data, setData] = useState(
         Object.keys(props.parameters)
             .slice(0, -1)
@@ -16,8 +17,6 @@ export default function Form(props) {
         ? (Object.values(props.parameters).slice(-1)[0].inputDisabled = true) &&
           (classValue = "text-red-500")
         : (Object.values(props.parameters).slice(-1)[0].inputDisabled = false);
-
-    console.log(Object.values(props.parameters).slice(-1)[0].inputDisabled);
 
     const handleChange = (e) => {
         setData({
