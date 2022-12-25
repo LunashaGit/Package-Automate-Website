@@ -1,5 +1,4 @@
 export default function Popup(props) {
-    console.log(props);
     return (
         <div
             className="fixed z-10 inset-0 overflow-y-auto"

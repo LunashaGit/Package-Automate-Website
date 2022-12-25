@@ -16,6 +16,7 @@ class PackageController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'FirstParameter' => 'required',
             'SecondParameter' => 'required',

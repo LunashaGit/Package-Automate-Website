@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Inertia } from "@inertiajs/inertia";
-
+import { useForm } from "@inertiajs/inertia-react";
 export default function Form(props) {
+    let classValue;
     const [data, setData] = useState(
         Object.keys(props.parameters)
             .slice(0, -1)
@@ -11,7 +12,12 @@ export default function Form(props) {
             }, {})
     );
 
-    console.log(data);
+    Object.values(data).some((value) => value === "")
+        ? (Object.values(props.parameters).slice(-1)[0].inputDisabled = true) &&
+          (classValue = "text-red-500")
+        : (Object.values(props.parameters).slice(-1)[0].inputDisabled = false);
+
+    console.log(Object.values(props.parameters).slice(-1)[0].inputDisabled);
 
     const handleChange = (e) => {
         setData({
@@ -38,7 +44,14 @@ export default function Form(props) {
                                 {props.parameters[key].inputLabel}
                             </label>
                             <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className={
+                                    props.parameters[key].inputName ===
+                                    Object.values(props.parameters).slice(-1)[0]
+                                        .inputName
+                                        ? classValue +
+                                          " shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        : " shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                }
                                 id={props.parameters[key].inputName}
                                 name={props.parameters[key].inputName}
                                 type={props.parameters[key].inputType}

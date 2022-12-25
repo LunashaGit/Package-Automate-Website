@@ -49,6 +49,7 @@ export default function Index(props) {
             HTMLTag: "input",
             inputType: "submit",
             inputName: "FourthParameter",
+            inputDisabled: false,
         },
     };
     return (
