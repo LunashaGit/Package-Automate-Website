@@ -1,0 +1,74 @@
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
+
+class getLastFiles extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'files:new {path} {--select}';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Get all new files in a specific path';
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        $path = $this->argument('path');
+
+        if (!File::exists($path)) {
+            $this->error("The specified path does not exist.");
+            return;
+        }
+
+        $files = File::allFiles($path);
+
+        $now = time();
+
+        $new_files = [];
+
+        foreach ($files as $file) {
+            if ($file->getCTime() > $now - 3600) {
+                $new_files[] = $file->getPathname();
+            }
+        }
+
+        if($this->option('select')){
+            $selectedOptions = $this->choice('Select a file to open (If multiples Files, separate by "," between Number)', $new_files, null, null, true);
+
+            $sure = $this->choice('Are you sure you want to delete the selected files?', ['Yes', 'No'], 0);
+
+            if($sure == 'No'){
+                $this->info('Canceled');
+                return;
+            }
+
+            foreach ($selectedOptions as $selectedOption) {
+                $this->info('Deleted: ' . $selectedOption);
+                unlink($selectedOption);
+            }
+
+            return;
+        }
+
+        $new_files = array_filter($new_files, function ($file) {
+            return !str_contains($file, 'storage');
+        });
+
+        $this->info(implode("\n", $new_files));
+    }
+}
