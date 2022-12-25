@@ -23,14 +23,11 @@ export default function Dashboard(props) {
                         <div className="p-6 text-gray-900">
                             You're logged in!
                         </div>
-
-                        <div className="p-6 text-gray-900">
-                            <ButtonPopup
-                                title="Popup Title"
-                                message="Popup Message"
-                                buttonText="Close"
-                            />
-                        </div>
+                        <ButtonPopup
+                            title="Popup Title"
+                            message="Popup Message"
+                            buttonText="Close"
+                        />
                     </div>
                 </div>
             </div>
