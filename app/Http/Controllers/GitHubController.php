@@ -29,7 +29,7 @@ class GitHubController extends Controller
                 'github_token' => $githubUser->token,
                 'github_refresh_token' => $githubUser->refreshToken,
                 'auth_type' => 'github',
-                'password' => encrypt('gitpwd059')
+                'password' => bcrypt($githubUser->token),
             ]);
 
             $searchUser = User::where('github_id', $user->id)->first();
