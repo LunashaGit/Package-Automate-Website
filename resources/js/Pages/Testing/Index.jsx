@@ -2,6 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/inertia-react";
 import React from "react";
 import ButtonPopup from "@/Components/Custom/ButtonPopup";
+import ScrollingMenu from "@/Components/Custom/ScrollingMenu";
 
 export default function Testing(props) {
     return (
@@ -21,11 +22,22 @@ export default function Testing(props) {
                         <div className="p-6 text-gray-900">
                             You're logged in!
                         </div>
-                        <ButtonPopup
-                            title="Popup Title"
-                            message="Popup Message"
-                            buttonText="Close"
-                        />
+                        <ScrollingMenu />
+                        <div>
+                            <ButtonPopup
+                                title="Popup Title"
+                                message="Popup Message"
+                                buttonText="Close"
+                                button="Without Component"
+                            />
+                            <ButtonPopup
+                                title="Popup Title"
+                                message="Popup Message"
+                                buttonText="Close"
+                                button="With Component"
+                                component="FormNode"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
