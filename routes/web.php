@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\GitHubController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,7 +26,8 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
+Route::get('auth/github', [GitHubController::class, 'gitRedirect'])->name('github.login');
+Route::get('auth/github/callback', [GitHubController::class, 'gitCallback'])->name('github.callback');
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', [ProfileController::class, 'index'])->name('testing.index');   
