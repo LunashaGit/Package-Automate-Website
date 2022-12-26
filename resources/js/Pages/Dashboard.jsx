@@ -4,8 +4,6 @@ import React from "react";
 import ButtonPopup from "@/Components/Custom/ButtonPopup";
 
 export default function Dashboard(props) {
-    const [showPopup, setShowPopup] = React.useState(false);
-
     return (
         <AuthenticatedLayout
             auth={props.auth}
