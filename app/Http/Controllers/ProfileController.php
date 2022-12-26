@@ -6,9 +6,19 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
+    public function index()
+    {
+        $this->middleware(['auth', 'verified']);
+
+        if (!Auth::check()) {
+            return Redirect::to('/');
+        }
+        return Inertia::render('Testing/Index');
+    }
     /**
      * Display the user's profile form.
      *
