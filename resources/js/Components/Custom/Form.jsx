@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Inertia } from "@inertiajs/inertia";
-import { useForm } from "@inertiajs/inertia-react";
 export default function Form(props) {
     let classValue;
 
