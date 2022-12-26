@@ -4,6 +4,7 @@ import React from "react";
 import ButtonPopup from "@/Components/Custom/ButtonPopup";
 import ScrollingMenu from "@/Components/Custom/ScrollingMenu";
 import Form from "@/Components/Custom/Form";
+import ThreeTest from "@/Components/Custom/ThreeTest";
 
 export default function Testing(props) {
     return (
@@ -45,6 +46,9 @@ export default function Testing(props) {
                                 action="/package"
                                 method="POST"
                             />
+                        </div>
+                        <div>
+                            <ThreeTest />
                         </div>
                     </div>
                 </div>
