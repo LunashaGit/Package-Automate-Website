@@ -75,7 +75,7 @@ const Content = ({
                 >
                     <div
                         className={
-                            `rounded-md ring-1 ring-black ring-opacity-5 ` +
+                            `absolute top-2 w-full rounded-md ring-1 ring-black ring-opacity-5 ` +
                             contentClasses
                         }
                     >

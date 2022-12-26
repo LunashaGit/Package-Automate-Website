@@ -43,12 +43,18 @@ export default function Form(props) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form
+            className="flex flex-col items-center justify-center"
+            onSubmit={handleSubmit}
+        >
             {data &&
                 Object.keys(data).map((key, index) => {
                     if (data[key].HTMLTag === "input") {
                         return (
-                            <div className="mb-4" key={index}>
+                            <div
+                                className="mb-4 w-full flex flex-col items-center justify-center"
+                                key={index}
+                            >
                                 <label
                                     className="block text-gray-700 text-sm font-bold mb-2"
                                     htmlFor={data[key].inputName}
@@ -57,12 +63,7 @@ export default function Form(props) {
                                 </label>
                                 <input
                                     className={
-                                        data[key].inputName ===
-                                        Object.values(data).slice(-1)[0]
-                                            .inputName
-                                            ? classValue +
-                                              " shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            : " shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        "w-9/12 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     }
                                     id={data[key].inputName}
                                     name={data[key].inputName}
@@ -79,7 +80,10 @@ export default function Form(props) {
                         );
                     } else if (data[key].HTMLTag === "select") {
                         return (
-                            <div className="mb-4" key={index}>
+                            <div
+                                className="mb-4 w-full flex flex-col items-center justify-center"
+                                key={index}
+                            >
                                 <label
                                     className="block text-gray-700 text-sm font-bold mb-2"
                                     htmlFor={data[key].inputName}
@@ -87,7 +91,7 @@ export default function Form(props) {
                                     {data[key].inputLabel}
                                 </label>
                                 <select
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="w-9/12 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     name={data[key].inputName}
                                     onChange={handleChange}
                                     required={data[key].inputRequired}
@@ -120,7 +124,10 @@ export default function Form(props) {
                         );
                     } else if (data[key].HTMLTag === "textarea") {
                         return (
-                            <div className="mb-4" key={index}>
+                            <div
+                                className="mb-4 w-full flex flex-col items-center justify-center"
+                                key={index}
+                            >
                                 <label
                                     className="block text-gray-700 text-sm font-bold mb-2"
                                     htmlFor={data[key].inputName}
@@ -128,7 +135,7 @@ export default function Form(props) {
                                     {data[key].inputLabel}
                                 </label>
                                 <textarea
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="w-9/12 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     id={data[key].inputName}
                                     name={data[key].inputName}
                                     placeholder={data[key].inputPlaceholder}

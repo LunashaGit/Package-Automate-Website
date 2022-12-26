@@ -3,6 +3,7 @@ import { Head } from "@inertiajs/inertia-react";
 import React from "react";
 import ButtonPopup from "@/Components/Custom/ButtonPopup";
 import ScrollingMenu from "@/Components/Custom/ScrollingMenu";
+import Form from "@/Components/Custom/Form";
 
 export default function Testing(props) {
     return (
@@ -36,6 +37,13 @@ export default function Testing(props) {
                                 buttonText="Close"
                                 button="With Component"
                                 component="FormNode"
+                            />
+                        </div>
+                        <div className="m-auto w-4/12">
+                            <Form
+                                name="Package"
+                                action="/package"
+                                method="POST"
                             />
                         </div>
                     </div>
