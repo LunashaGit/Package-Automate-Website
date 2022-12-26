@@ -10,7 +10,7 @@ export default function ButtonPopup(props) {
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() => setShowPopup(true)}
                 >
-                    Show Popup
+                    {props.button}
                 </button>
             </div>
             <div className="p-6 text-gray-900">

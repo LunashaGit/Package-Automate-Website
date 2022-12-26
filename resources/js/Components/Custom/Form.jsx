@@ -1,10 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Inertia } from "@inertiajs/inertia";
+import { PackageParameters } from "@/Components/Custom/FormParameters/PackageParameters";
+import { NodeParameters } from "@/Components/Custom/FormParameters/NodeParameters";
+
 export default function Form(props) {
     let classValue;
 
-    const [data, setData] = useState(
-        Object.keys(props.parameters)
+    const [data, setData] = useState({});
+
+    useEffect(() => {
+        switch (props.name) {
+            case "Package":
+                setData(PackageParameters);
+                break;
+            case "Node":
+                setData(NodeParameters);
+                break;
+            default:
+                break;
+        }
+    }, [props.name]);
+
+    const [request, setRequest] = useState(
+        Object.keys(data)
             .slice(0, -1)
             .reduce((obj, key) => {
                 obj[key] = "";
@@ -12,121 +30,119 @@ export default function Form(props) {
             }, {})
     );
 
-    Object.values(data).some((value) => value === "")
-        ? (Object.values(props.parameters).slice(-1)[0].inputDisabled = true) &&
-          (classValue = "text-red-500")
-        : (Object.values(props.parameters).slice(-1)[0].inputDisabled = false);
-
     const handleChange = (e) => {
-        setData({
-            ...data,
+        setRequest({
+            ...request,
             [e.target.name]: e.target.value,
         });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        Inertia.post(props.action, data);
+        Inertia.post(props.action, request);
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            {Object.keys(props.parameters).map((key, index) => {
-                if (props.parameters[key].HTMLTag === "input") {
-                    return (
-                        <div className="mb-4" key={index}>
-                            <label
-                                className="block text-gray-700 text-sm font-bold mb-2"
-                                htmlFor={props.parameters[key].inputName}
-                            >
-                                {props.parameters[key].inputLabel}
-                            </label>
-                            <input
-                                className={
-                                    props.parameters[key].inputName ===
-                                    Object.values(props.parameters).slice(-1)[0]
-                                        .inputName
-                                        ? classValue +
-                                          " shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        : " shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                }
-                                id={props.parameters[key].inputName}
-                                name={props.parameters[key].inputName}
-                                type={props.parameters[key].inputType}
-                                placeholder={
-                                    props.parameters[key].inputPlaceholder
-                                }
-                                required={props.parameters[key].inputRequired}
-                                disabled={props.parameters[key].inputDisabled}
-                                readOnly={props.parameters[key].inputReadOnly}
-                                autoFocus={props.parameters[key].inputAutoFocus}
-                                autoComplete="off"
-                                onChange={handleChange}
-                            />
-                        </div>
-                    );
-                } else if (props.parameters[key].HTMLTag === "select") {
-                    return (
-                        <div className="mb-4" key={index}>
-                            <label
-                                className="block text-gray-700 text-sm font-bold mb-2"
-                                htmlFor={props.parameters[key].inputName}
-                            >
-                                {props.parameters[key].inputLabel}
-                            </label>
-                            <select
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                name={props.parameters[key].inputName}
-                                onChange={handleChange}
-                            >
-                                {Object.keys(
-                                    props.parameters[key].InParameter
-                                ).map((id, indexOption) => {
-                                    return (
-                                        <option
-                                            value={
-                                                props.parameters[key]
-                                                    .InParameter[id].optionValue
-                                            }
-                                            key={indexOption}
-                                        >
-                                            {
-                                                props.parameters[key]
-                                                    .InParameter[id].optionLabel
-                                            }
-                                        </option>
-                                    );
-                                })}
-                            </select>
-                        </div>
-                    );
-                } else if (props.parameters[key].HTMLTag === "textarea") {
-                    return (
-                        <div className="mb-4" key={index}>
-                            <label
-                                className="block text-gray-700 text-sm font-bold mb-2"
-                                htmlFor={props.parameters[key].inputName}
-                            >
-                                {props.parameters[key].inputLabel}
-                            </label>
-                            <textarea
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id={props.parameters[key].inputName}
-                                name={props.parameters[key].inputName}
-                                placeholder={
-                                    props.parameters[key].inputPlaceholder
-                                }
-                                required={props.parameters[key].inputRequired}
-                                disabled={props.parameters[key].inputDisabled}
-                                readOnly={props.parameters[key].inputReadOnly}
-                                autoFocus={props.parameters[key].inputAutoFocus}
-                                autoComplete="off"
-                                onChange={handleChange}
-                            />
-                        </div>
-                    );
-                }
-            })}
+            {data &&
+                Object.keys(data).map((key, index) => {
+                    if (data[key].HTMLTag === "input") {
+                        return (
+                            <div className="mb-4" key={index}>
+                                <label
+                                    className="block text-gray-700 text-sm font-bold mb-2"
+                                    htmlFor={data[key].inputName}
+                                >
+                                    {data[key].inputLabel}
+                                </label>
+                                <input
+                                    className={
+                                        data[key].inputName ===
+                                        Object.values(data).slice(-1)[0]
+                                            .inputName
+                                            ? classValue +
+                                              " shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            : " shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    }
+                                    id={data[key].inputName}
+                                    name={data[key].inputName}
+                                    type={data[key].inputType}
+                                    placeholder={data[key].inputPlaceholder}
+                                    required={data[key].inputRequired}
+                                    disabled={data[key].inputDisabled}
+                                    readOnly={data[key].inputReadOnly}
+                                    autoFocus={data[key].inputAutoFocus}
+                                    autoComplete="off"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        );
+                    } else if (data[key].HTMLTag === "select") {
+                        return (
+                            <div className="mb-4" key={index}>
+                                <label
+                                    className="block text-gray-700 text-sm font-bold mb-2"
+                                    htmlFor={data[key].inputName}
+                                >
+                                    {data[key].inputLabel}
+                                </label>
+                                <select
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    name={data[key].inputName}
+                                    onChange={handleChange}
+                                    required={data[key].inputRequired}
+                                >
+                                    <option value="" disabled selected>
+                                        ----
+                                    </option>
+                                    {Object.keys(data[key].InParameter).map(
+                                        (id, indexOption) => {
+                                            return (
+                                                <option
+                                                    value={
+                                                        data[key].InParameter[
+                                                            id
+                                                        ].optionValue
+                                                    }
+                                                    key={indexOption}
+                                                >
+                                                    {
+                                                        data[key].InParameter[
+                                                            id
+                                                        ].optionLabel
+                                                    }
+                                                </option>
+                                            );
+                                        }
+                                    )}
+                                </select>
+                            </div>
+                        );
+                    } else if (data[key].HTMLTag === "textarea") {
+                        return (
+                            <div className="mb-4" key={index}>
+                                <label
+                                    className="block text-gray-700 text-sm font-bold mb-2"
+                                    htmlFor={data[key].inputName}
+                                >
+                                    {data[key].inputLabel}
+                                </label>
+                                <textarea
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id={data[key].inputName}
+                                    name={data[key].inputName}
+                                    placeholder={data[key].inputPlaceholder}
+                                    required={data[key].inputRequired}
+                                    disabled={data[key].inputDisabled}
+                                    readOnly={data[key].inputReadOnly}
+                                    autoFocus={data[key].inputAutoFocus}
+                                    autoComplete="off"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        );
+                    }
+                })}
         </form>
     );
 }

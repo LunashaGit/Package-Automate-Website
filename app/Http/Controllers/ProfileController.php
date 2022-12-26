@@ -10,13 +10,17 @@ use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware('auth');
 
-        if (!Auth::check()) {
+        if(!Auth::check()){
             return Redirect::to('/');
         }
+    }
+    
+    public function index()
+    {
         return Inertia::render('Testing/Index');
     }
     /**

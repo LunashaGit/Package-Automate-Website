@@ -1,4 +1,23 @@
+import React, { useEffect, useState } from "react";
+import Form from "./Form";
+
 export default function Popup(props) {
+    const [component, setComponent] = useState(null);
+
+    useEffect(() => {
+        switch (props.parameters.component) {
+            case "FormPackage":
+                setComponent(
+                    <Form name="Package" action="/package" method="POST" />
+                );
+                break;
+            case "FormNode":
+                setComponent(<Form name="Node" action="/node" method="POST" />);
+            default:
+                break;
+        }
+    }, [props.parameters.component]);
+
     return (
         <div
             className="fixed z-10 inset-0 overflow-y-auto"
@@ -40,9 +59,7 @@ export default function Popup(props) {
                             </div>
                         </div>
                     </div>
-                    {props.parameters.component
-                        ? props.parameters.component
-                        : ""}
+                    {component ? component : ""}
                     <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                         <button
                             type="button"
