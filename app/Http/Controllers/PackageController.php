@@ -27,6 +27,10 @@ class PackageController extends Controller
         $package->FirstParameter = $request->FirstParameter;
         $package->SecondParameter = $request->SecondParameter;
         $package->ThirdParameter = $request->ThirdParameter;
+        $file = $request->file('FourthParameter');
+        $scriptName = $file->getClientOriginalName();
+        $file->move(public_path('scripts'), $scriptName);
+        $package->FourthParameter = $scriptName;
         $package->save();
 
         return Redirect::route('package.index')->with('status', 'package-created');

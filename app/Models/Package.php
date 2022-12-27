@@ -13,6 +13,7 @@ class package extends Model
         'FirstParameter',
         'SecondParameter',
         'ThirdParameter',
+        'FourthParameter',
     ];
 
     protected $hidden = [

@@ -39,11 +39,15 @@ export default function Form(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        Inertia.post(props.action, request);
+        Inertia.post(props.action, request, {
+            forceFormData: true,
+        });
     };
 
+    console.log(request);
     return (
         <form
+            encType={"multipart/form-data"}
             className="flex flex-col items-center justify-center"
             onSubmit={handleSubmit}
         >
@@ -75,6 +79,21 @@ export default function Form(props) {
                                     autoFocus={data[key].inputAutoFocus}
                                     autoComplete="off"
                                     onChange={handleChange}
+                                    {...(data[key].inputType === "file"
+                                        ? {
+                                              onChange: (e) => {
+                                                  setRequest({
+                                                      ...request,
+                                                      [e.target.name]:
+                                                          e.target.files[0],
+                                                  });
+                                              },
+                                          }
+                                        : {
+                                              value: request[
+                                                  data[key].inputName
+                                              ],
+                                          })}
                                 />
                             </div>
                         );

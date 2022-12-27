@@ -41,8 +41,16 @@ export const PackageParameters = {
     },
     FourthParameter: {
         HTMLTag: "input",
-        inputType: "submit",
+        inputType: "file",
         inputName: "FourthParameter",
+        inputLabel: "Fourth Parameter",
+        inputPlaceholder: "Fourth Parameter",
+        accept: ".php",
+    },
+    FiveParameter: {
+        HTMLTag: "input",
+        inputType: "submit",
+        inputName: "FiveParameter",
         inputDisabled: false,
     },
 };
