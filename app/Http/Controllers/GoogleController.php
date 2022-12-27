@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +21,13 @@ class GoogleController extends Controller
 
             $googleUser = Socialite::driver('google')->user();
             
+            $Found = User::where('google_id', $googleUser->id)->first();
+            
+            if ($Found) {
+                Auth::login($Found);
+                return redirect('/home');
+            }
+
             $user = User::updateOrCreate([
                 'google_id' => $googleUser->id,
             ], [

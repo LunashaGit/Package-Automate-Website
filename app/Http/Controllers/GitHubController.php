@@ -5,6 +5,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Redirect;
 
 class GitHubController extends Controller
 {
@@ -12,40 +13,34 @@ class GitHubController extends Controller
     {
         return Socialite::driver('github')->redirect();
     }
-       
+    
     public function gitCallback()
     {
         try {
-     
-            
 
             $githubUser = Socialite::driver('github')->user();
- 
+
+            $Found = User::where('github_id', $githubUser->id)->first();
+            
+            if ($Found) {
+                Auth::login($Found);
+                return  Redirect::route('testing.index');
+            }
+
             $user = User::updateOrCreate([
                 'github_id' => $githubUser->id,
             ], [
                 'name' => $githubUser->name,
                 'email' => $githubUser->email,
-                'github_token' => $githubUser->token,
-                'github_refresh_token' => $githubUser->refreshToken,
                 'auth_type' => 'github',
                 'password' => bcrypt($githubUser->token),
             ]);
 
-            $searchUser = User::where('github_id', $user->id)->first();
-      
-            if($searchUser){
-      
-                Auth::login($searchUser);
-     
-                return redirect('/dashboard');
-      
-            }
-        
             Auth::login($user);
         
-            return redirect('/home');
-     
+            return  Redirect::route('testing.index');
+
+    
         } catch (Exception $e) {
             dd($e->getMessage());
         }

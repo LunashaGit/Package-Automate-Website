@@ -29,14 +29,14 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
 
-        if($_SERVER['argv'][1] == 'command:undo' || $_SERVER['argv'][1] == 'undo'){
-            return;
-        }
+        // if($_SERVER['argv'][1] == 'command:undo' || $_SERVER['argv'][1] == 'undo'){
+        //     return;
+        // }
 
-        if($_SERVER['argv'][1] == 'package:discover' || $_SERVER['argv'][1] == 'package:discover'){
-            return;
-        }
+        // if($_SERVER['argv'][1] == 'package:discover' || $_SERVER['argv'][1] == 'package:discover'){
+        //     return;
+        // }
 
-        Log::channel('artisan')->debug(implode(' ', $_SERVER['argv']));
+        // Log::channel('artisan')->debug(implode(' ', $_SERVER['argv']));
     }
 }

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Laravel\Socialite\Facades\Socialite;
+
 
 class ProfileController extends Controller
 {
@@ -63,6 +65,7 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request)
     {
+        
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current-password'],
         ]);
