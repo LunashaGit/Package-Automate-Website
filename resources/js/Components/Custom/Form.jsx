@@ -44,7 +44,6 @@ export default function Form(props) {
         });
     };
 
-    console.log(request);
     return (
         <form
             encType={"multipart/form-data"}
