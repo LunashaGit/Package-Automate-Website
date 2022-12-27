@@ -4,8 +4,6 @@ import { PackageParameters } from "@/Components/Custom/FormParameters/PackagePar
 import { NodeParameters } from "@/Components/Custom/FormParameters/NodeParameters";
 
 export default function Form(props) {
-    let classValue;
-
     const [data, setData] = useState({});
 
     useEffect(() => {
@@ -93,6 +91,12 @@ export default function Form(props) {
                                                   data[key].inputName
                                               ],
                                           })}
+                                    {...(data[key].inputType === "file" &&
+                                    data[key].accept
+                                        ? {
+                                              accept: data[key].accept,
+                                          }
+                                        : {})}
                                 />
                             </div>
                         );
