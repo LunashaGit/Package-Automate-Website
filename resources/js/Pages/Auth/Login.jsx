@@ -6,7 +6,7 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/inertia-react";
-
+import Oauth from "@/Components/Custom/Oauth";
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
@@ -106,20 +106,7 @@ export default function Login({ status, canResetPassword }) {
                         Log in
                     </PrimaryButton>
                 </div>
-                <div className="flex items-center justify-between mt-4">
-                    <a
-                        href={route("google.login")}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Login with Google
-                    </a>
-                    <a
-                        href={route("github.login")}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Login with Github
-                    </a>
-                </div>
+                <Oauth name="Login" />
             </form>
         </GuestLayout>
     );
