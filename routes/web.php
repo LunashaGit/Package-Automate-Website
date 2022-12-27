@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\GitHubController;
+use App\Http\Controllers\GoogleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,6 +29,8 @@ Route::get('/', function () {
 });
 Route::get('auth/github', [GitHubController::class, 'gitRedirect'])->name('github.login');
 Route::get('auth/github/callback', [GitHubController::class, 'gitCallback'])->name('github.callback');
+Route::get('auth/google', [GoogleController::class, 'googleRedirect'])->name('google.login');
+Route::get('auth/google/callback', [GoogleController::class, 'googleCallback'])->name('google.callback');
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', [ProfileController::class, 'index'])->name('testing.index');   
