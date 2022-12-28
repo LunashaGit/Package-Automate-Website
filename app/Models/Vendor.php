@@ -17,7 +17,8 @@ class vendor extends Model
         'nameAuthor',
         'emailAuthor',
         'stability',
-        'file'
+        'file',
+        'user_id'
     ];
 
     protected $hidden = [

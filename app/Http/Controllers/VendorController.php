@@ -91,12 +91,11 @@ class VendorController extends Controller
             // }
             // ');
 
-
-
-
             $package->file = $scriptName;
         }
         
+        $package->user_id = auth()->user()->id;
+
         $package->save();
 
         return Redirect::route('package.index')->with('status', 'package-created');
