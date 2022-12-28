@@ -113,7 +113,7 @@ export default function Form(props) {
                                     {data[key].inputLabel}
                                 </label>
                                 <select
-                                    className="w-9/12 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="w-9/12 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     name={data[key].inputName}
                                     onChange={handleChange}
                                     required={data[key].inputRequired}
@@ -157,7 +157,7 @@ export default function Form(props) {
                                     {data[key].inputLabel}
                                 </label>
                                 <textarea
-                                    className="w-9/12 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="w-9/12 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     id={data[key].inputName}
                                     name={data[key].inputName}
                                     placeholder={data[key].inputPlaceholder}
