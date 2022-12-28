@@ -38,13 +38,11 @@ class PackageController extends Controller
 
             $name = substr(uniqid(), 0, 8);
 
-            $template = storage_path('app/templates/creation.zip');
             fopen(storage_path("app/temp/creation/{$name}.zip"), "w");
-            $destination = storage_path("app/temp/creation/{$name}.zip");
-            copy($template, $destination);
+            copy(storage_path('app/templates/creation.zip'), storage_path("app/temp/creation/{$name}.zip"));
 
-            $zip->open($destination);
-            $zip->addFile($file, $scriptName);
+            $zip->open(storage_path("app/temp/creation/{$name}.zip"));
+            $zip->addFile(storage_path("app/temp/creation/{$scriptName}"), $scriptName);
             $zip->close();
 
             $file->move(storage_path('app/temp/creation/'), $scriptName);
