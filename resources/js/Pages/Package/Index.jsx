@@ -32,7 +32,7 @@ export default function Index(props) {
                                 message="Package Message"
                                 buttonText="Close"
                                 button="Show Vendor"
-                                component="FormPackage"
+                                component="FormVendor"
                             />
                         </div>
                     </div>

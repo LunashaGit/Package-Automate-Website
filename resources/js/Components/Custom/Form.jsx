@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Inertia } from "@inertiajs/inertia";
-import { PackageParameters } from "@/Components/Custom/FormParameters/PackageParameters";
+import { VendorParameters } from "@/Components/Custom/FormParameters/VendorParameter";
 import { NodeParameters } from "@/Components/Custom/FormParameters/NodeParameters";
 
 export default function Form(props) {
@@ -8,8 +8,8 @@ export default function Form(props) {
 
     useEffect(() => {
         switch (props.name) {
-            case "Package":
-                setData(PackageParameters);
+            case "Vendor":
+                setData(VendorParameters);
                 break;
             case "Node":
                 setData(NodeParameters);

@@ -42,7 +42,7 @@ export default function Testing(props) {
                         </div>
                         <div className="m-auto w-4/12">
                             <Form
-                                name="Package"
+                                name="Vendor"
                                 action="/package"
                                 method="POST"
                             />

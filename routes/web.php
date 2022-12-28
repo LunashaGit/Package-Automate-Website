@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PackageController;
 use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,8 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/package', [PackageController::class, 'index'])->name('package.index');
-    Route::post('/package', [PackageController::class, 'store'])->name('package.store');
+    Route::get('/package', [VendorController::class, 'index'])->name('package.index');
+    Route::post('/package', [VendorController::class, 'store'])->name('package.store');
 });
 
 require __DIR__.'/auth.php';

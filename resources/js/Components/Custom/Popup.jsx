@@ -6,9 +6,9 @@ export default function Popup(props) {
 
     useEffect(() => {
         switch (props.parameters.component) {
-            case "FormPackage":
+            case "FormVendor":
                 setComponent(
-                    <Form name="Package" action="/package" method="POST" />
+                    <Form name="Vendor" action="/package" method="POST" />
                 );
                 break;
             case "FormNode":
