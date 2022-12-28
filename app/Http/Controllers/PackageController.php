@@ -16,6 +16,16 @@ class PackageController extends Controller
 
     public function store(Request $request)
     {
+        function createFile($path, $content)
+        {
+            if(file_exists($path)){
+                echo "File already exists";
+                return;
+            }
+            $file = fopen($path, "w");
+            fwrite($file, $content);
+            fclose($file);
+        }
 
         $request->validate([
             'FirstParameter' => 'required',
@@ -39,13 +49,43 @@ class PackageController extends Controller
             $name = substr(uniqid(), 0, 8);
 
             fopen(storage_path("app/temp/creation/{$name}.zip"), "w");
-            copy(storage_path('app/templates/creation.zip'), storage_path("app/temp/creation/{$name}.zip"));
+            copy(storage_path('app/templates/template.zip'), storage_path("app/temp/creation/{$name}.zip"));
 
             $zip->open(storage_path("app/temp/creation/{$name}.zip"));
-            $zip->addFile(storage_path("app/temp/creation/{$scriptName}"), $scriptName);
-            $zip->close();
+            $zip->extractTo(storage_path("app/temp/creation/{$name}"));
 
             $file->move(storage_path('app/temp/creation/'), $scriptName);
+
+            createFile(storage_path("app/temp/creation/{$name}/src/composer") . ".json", '
+            {
+                "name": "' . $package->FirstParameter . '",
+                "description": "' . $package->SecondParameter . '",
+                "type": "library",
+                "license": "MIT",
+                "autoload": {
+                    "psr-4": {
+                        "' . $package->FirstParameter . '": "src/"
+                    }
+                },
+                "extra": {
+                    "laravel": {
+                        "providers": [
+                            "' . $package->FirstParameter . "\\\\" . $scriptName . 'ServiceProvider"
+                        ]
+                    },
+                    "aliases": {
+                        "' . $scriptName .'": "' . $package->FirstParameter . "\\\\Facades\\\\". $scriptName .'"
+                    }
+                },
+                "authors": [
+                    {
+                        "name": "Luna Muylkens",
+                        "email": "93606228+LunashaGit@users.noreply.github.com"
+                    }
+                ],
+                "minimum-stability": "stable"
+            }
+            ');
             $package->FourthParameter = $scriptName;
         }
         
