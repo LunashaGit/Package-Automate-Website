@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use App\Models\Vendor;
 use ZipArchive;
+use Inertia\Inertia;
+use App\Models\Vendor;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
 
 class VendorController extends Controller
@@ -100,54 +100,54 @@ class VendorController extends Controller
             ');
 
             createFile(storage_path("app/temp/creation/{$name}/src") . "/{$package->namePackage}ServiceProvider.php", '<?php
-namespace ' . $package->name . '\\' . $package->namePackage . ';
+                namespace ' . $package->name . '\\' . $package->namePackage . ';
 
-use Illuminate\Support\ServiceProvider;
-use ' . $package->name . '\\' . $package->namePackage . '\\' . $package->namePackage . ';
-class ' . $package->namePackage . 'ServiceProvider extends ServiceProvider
-{
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $this->commands([
-            Commands' . $package->namePackage . '::class,
-        ]);
-    }
+                use Illuminate\Support\ServiceProvider;
+                use ' . $package->name . '\\' . $package->namePackage . '\\' . $package->namePackage . ';
+                class ' . $package->namePackage . 'ServiceProvider extends ServiceProvider
+                {
+                    /**
+                     * Bootstrap services.
+                     *
+                     * @return void
+                     */
+                    public function boot()
+                    {
+                        $this->commands([
+                            Commands' . $package->namePackage . '::class,
+                        ]);
+                    }
 
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->app->bind("' . $package->namePackage . '", function () {
-            return new ' . $package->namePackage . '();
-        });
+                    /**
+                     * Register services.
+                     *
+                     * @return void
+                     */
+                    public function register()
+                    {
+                        $this->app->bind("' . $package->namePackage . '", function () {
+                            return new ' . $package->namePackage . '();
+                        });
 
-        $this->commands([
-            "' . $package->namePackage . '",
-        ]);
-    }
-}
+                        $this->commands([
+                            "' . $package->namePackage . '",
+                        ]);
+                    }
+                }
             ');
 
             createFile(storage_path("app/temp/creation/{$name}/src") . "/{$package->namePackage}.php", '<?php
-namespace ' . $package->name . '\\' . $package->namePackage . ';
+                namespace ' . $package->name . '\\' . $package->namePackage . ';
 
-use Illuminate\Support\Facades\Facade;
+                use Illuminate\Support\Facades\Facade;
 
-class ' . $package->namePackage . ' extends Facade
-{
-    protected static function getFacadeAccessor()
-    {
-        return "' . $package->namePackage . '";
-    }
-}
+                class ' . $package->namePackage . ' extends Facade
+                {
+                    protected static function getFacadeAccessor()
+                    {
+                        return "' . $package->namePackage . '";
+                    }
+                }
             ');
 
             $file->move(storage_path("app/temp/creation/{$name}/src/Commands"), $scriptName);
@@ -155,22 +155,21 @@ class ' . $package->namePackage . ' extends Facade
             $package->file = $scriptName;
 
             fopen(storage_path("app/temp/creation/{$package->namePackage}.zip"), "w");
-            $zip->open(storage_path("app/temp/creation/{$package->namePackage}.zip"), ZipArchive::CREATE);
-            
-            $files = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator(storage_path("app/temp/creation/{$name}")),
-                \RecursiveIteratorIterator::LEAVES_ONLY
-            );
-
-            foreach ($files as $name => $file)
-            {
-                if (!$file->isDir())
-                {
-                    $filePath = $file->getRealPath();
-                    
-                    $relativePath = substr($filePath, strlen(storage_path("app/temp/creation/{$name}")) + 1);
-
-                    $zip->addFile($filePath, $relativePath);
+            $zip->open(storage_path("app/temp/creation/{$package->namePackage}.zip"));
+            $zip->addEmptyDir("src/Commands");
+            $files = File::allFiles(storage_path("app/temp/creation/{$name}"));
+            foreach ($files as $file) {
+                if($file->getFilename() == $package->namePackage . "ServiceProvider.php"){
+                    $zip->addFile($file->getRealPath(), "src/" . $file->getFilename());
+                }
+                if($file->getFilename() == $package->namePackage . ".php"){
+                    $zip->addFile($file->getRealPath(), "src/" . $file->getFilename());
+                }
+                if($file->getFilename() == $package->file){
+                    $zip->addFile($file->getRealPath(), "src/Commands/" . $file->getFilename());
+                }
+                if($file->getFilename() == "composer.json"){
+                    $zip->addFile($file->getRealPath(), $file->getFilename());
                 }
             }
 
@@ -185,7 +184,7 @@ class ' . $package->namePackage . ' extends Facade
         $package->save();
 
         $url = URL::temporarySignedRoute(
-            'download', now()->addMinutes(5), ['id' => $package->id]
+            'download', now()->addSeconds(10), ['id' => $package->id]
         );
 
         return Inertia::render('Testing/Index', [
