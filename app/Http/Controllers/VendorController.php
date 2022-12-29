@@ -44,7 +44,9 @@ class VendorController extends Controller
             'nameAuthor' => 'required',
             'emailAuthor' => 'required',
             'stability' => 'required',
+            'command' => 'required',
         ]);
+
         if($request){
             $package = new Vendor();
         }
@@ -130,7 +132,7 @@ class VendorController extends Controller
                         });
 
                         $this->commands([
-                            "' . $package->namePackage . '",
+                            "' . $package->command . '",
                         ]);
                     }
                 }

@@ -18,6 +18,7 @@ class vendor extends Model
         'emailAuthor',
         'stability',
         'file',
+        'command',
         'user_id'
     ];
 

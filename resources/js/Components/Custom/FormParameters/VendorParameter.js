@@ -34,6 +34,7 @@ export const VendorParameters = {
     Type: {
         HTMLTag: "select",
         inputName: "type",
+        inputLabel: "Type",
         inputRequired: true,
         InParameter: {
             Library: {
@@ -67,7 +68,7 @@ export const VendorParameters = {
     },
     EmailAuthor: {
         HTMLTag: "input",
-        inputType: "text",
+        inputType: "email",
         inputName: "emailAuthor",
         inputLabel: "Email of Author",
         inputPlaceholder: "Email of Author",
@@ -79,6 +80,7 @@ export const VendorParameters = {
     Stability: {
         HTMLTag: "select",
         inputName: "stability",
+        inputLabel: "Stability",
         inputRequired: true,
         InParameter: {
             Stable: {
@@ -102,6 +104,17 @@ export const VendorParameters = {
                 optionLabel: "Dev",
             },
         },
+    },
+    Command: {
+        HTMLTag: "input",
+        inputType: "text",
+        inputName: "command",
+        inputLabel: "Command",
+        inputPlaceholder: "Command",
+        inputRequired: true,
+        inputDisabled: false,
+        inputReadOnly: false,
+        inputAutoFocus: true,
     },
     File: {
         HTMLTag: "input",

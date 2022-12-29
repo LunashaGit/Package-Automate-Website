@@ -5,7 +5,8 @@ import ButtonPopup from "@/Components/Custom/ButtonPopup";
 import ScrollingMenu from "@/Components/Custom/ScrollingMenu";
 import Form from "@/Components/Custom/Form";
 import ThreeTest from "@/Components/Custom/ThreeTest";
-
+import { Inertia } from "@inertiajs/inertia";
+import OnePositionScrollingMenu from "@/Components/Custom/OnePositionScrollingMenu";
 export default function Testing(props) {
     return (
         <AuthenticatedLayout
@@ -40,6 +41,29 @@ export default function Testing(props) {
                                 component="FormNode"
                             />
                         </div>
+                        <div className="p-6 text-gray-900">
+                            {props.url ? (
+                                <a href={props.url}>
+                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                        Download
+                                    </button>
+                                </a>
+                            ) : (
+                                <button
+                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                    onClick={() => {
+                                        // Route to Package
+                                        Inertia.get("/package");
+                                    }}
+                                >
+                                    Go to Package
+                                </button>
+                            )}
+                        </div>
+                        <div className="p-6 text-gray-900">
+                            <OnePositionScrollingMenu />
+                        </div>
+                        <hr />
                         <div className="m-auto w-4/12">
                             <Form
                                 name="Vendor"
@@ -49,18 +73,6 @@ export default function Testing(props) {
                         </div>
                         <div>
                             <ThreeTest />
-                        </div>
-                        <div>
-                            {props.url ? (
-                                <div>
-                                    <h1>URL</h1>
-                                    <a href={props.url}>Download File</a>
-                                </div>
-                            ) : (
-                                <div>
-                                    <h1>No URL</h1>
-                                </div>
-                            )}
                         </div>
                     </div>
                 </div>
