@@ -7,7 +7,6 @@ import Form from "@/Components/Custom/Form";
 import ThreeTest from "@/Components/Custom/ThreeTest";
 
 export default function Testing(props) {
-    console.log(props.url);
     return (
         <AuthenticatedLayout
             auth={props.auth}
