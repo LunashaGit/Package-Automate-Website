@@ -184,9 +184,13 @@ class ' . $package->namePackage . ' extends Facade
 
         $package->save();
 
-        return URL::temporarySignedRoute(
+        $url = URL::temporarySignedRoute(
             'download', now()->addMinutes(5), ['id' => $package->id]
         );
+
+        return Inertia::render('Testing/Index', [
+            'url' => $url,
+        ]);
         
     }
 }

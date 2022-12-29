@@ -7,6 +7,7 @@ import Form from "@/Components/Custom/Form";
 import ThreeTest from "@/Components/Custom/ThreeTest";
 
 export default function Testing(props) {
+    console.log(props.url);
     return (
         <AuthenticatedLayout
             auth={props.auth}
@@ -49,6 +50,18 @@ export default function Testing(props) {
                         </div>
                         <div>
                             <ThreeTest />
+                        </div>
+                        <div>
+                            {props.url ? (
+                                <div>
+                                    <h1>URL</h1>
+                                    <a href={props.url}>Download File</a>
+                                </div>
+                            ) : (
+                                <div>
+                                    <h1>No URL</h1>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
