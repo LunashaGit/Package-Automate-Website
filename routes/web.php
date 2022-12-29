@@ -31,6 +31,7 @@ Route::get('auth/github', [GitHubController::class, 'gitRedirect'])->name('githu
 Route::get('auth/github/callback', [GitHubController::class, 'gitCallback'])->name('github.callback');
 Route::get('auth/google', [GoogleController::class, 'googleRedirect'])->name('google.login');
 Route::get('auth/google/callback', [GoogleController::class, 'googleCallback'])->name('google.callback');
+Route::get('/download/{id}', [VendorController::class, 'download'])->name('download');
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', [ProfileController::class, 'index'])->name('testing.index');   

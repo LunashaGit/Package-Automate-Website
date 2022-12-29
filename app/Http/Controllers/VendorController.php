@@ -7,11 +7,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Vendor;
 use ZipArchive;
+use Illuminate\Support\Facades\URL;
+
 class VendorController extends Controller
 {
     public function index()
     {
         return Inertia::render('Package/Index');
+    }
+
+    public function download($id)
+    {
+        $package = Vendor::find($id);
+        $path = storage_path('app/temp/creation/'.$package->namePackage.'.zip');
+        return response()->download($path);
     }
 
     public function store(Request $request)
@@ -57,47 +66,127 @@ class VendorController extends Controller
 
             $zip->open(storage_path("app/temp/creation/{$name}.zip"));
             $zip->extractTo(storage_path("app/temp/creation/{$name}"));
+            $zip->close();
 
-            $file->move(storage_path('app/temp/creation/'), $scriptName);
+            createFile(storage_path("app/temp/creation/{$name}/composer") . ".json", '
+            {
+                "name": "' .strtolower($package->name) . '/' . strtolower($package->namePackage) . '",
+                "description": "' . $package->description . '",
+                "type": "' . strtolower($package->type) . '",
+                "license": "MIT",
+                "autoload": {
+                    "psr-4": {
+                        "' . $package->name . "\\\\" .  $package->namePackage . "\\\\" . '": "src/"
+                    }
+                },
+                "extra": {
+                    "laravel": {
+                        "providers": [
+                            "' . $package->name . "\\\\" . $package->namePackage .  "\\\\" . $package->namePackage . 'ServiceProvider"
+                        ]
+                    },
+                    "aliases": {
+                        "' . $package->namePackage .'": "' . $package->name . "\\\\" . $package->namePackage . "\\\\Facades\\\\". $package->namePackage .'"
+                    }
+                },
+                "authors": [
+                    {
+                        "name": "' . $package->nameAuthor . '",
+                        "email": "' . $package->emailAuthor . '"
+                    }
+                ],
+                "minimum-stability": "' . strtolower($package->stability) . '"
+            }
+            ');
 
-            // createFile(storage_path("app/temp/creation/{$name}/composer") . ".json", '
-            // {
-            //     "name": "' . $package->FirstParameter . '",
-            //     "description": "' . $package->SecondParameter . '",
-            //     "type": "library",
-            //     "license": "MIT",
-            //     "autoload": {
-            //         "psr-4": {
-            //             "' . $package->FirstParameter . '": "src/"
-            //         }
-            //     },
-            //     "extra": {
-            //         "laravel": {
-            //             "providers": [
-            //                 "' . $package->FirstParameter . "\\\\" . $scriptName . 'ServiceProvider"
-            //             ]
-            //         },
-            //         "aliases": {
-            //             "' . $scriptName .'": "' . $package->FirstParameter . "\\\\Facades\\\\". $scriptName .'"
-            //         }
-            //     },
-            //     "authors": [
-            //         {
-            //             "name": "Luna Muylkens",
-            //             "email": "93606228+LunashaGit@users.noreply.github.com"
-            //         }
-            //     ],
-            //     "minimum-stability": "stable"
-            // }
-            // ');
+            createFile(storage_path("app/temp/creation/{$name}/src") . "/{$package->namePackage}ServiceProvider.php", '<?php
+namespace ' . $package->name . '\\' . $package->namePackage . ';
+
+use Illuminate\Support\ServiceProvider;
+use ' . $package->name . '\\' . $package->namePackage . '\\' . $package->namePackage . ';
+class ' . $package->namePackage . 'ServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->commands([
+            Commands' . $package->namePackage . '::class,
+        ]);
+    }
+
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->bind("' . $package->namePackage . '", function () {
+            return new ' . $package->namePackage . '();
+        });
+
+        $this->commands([
+            "' . $package->namePackage . '",
+        ]);
+    }
+}
+            ');
+
+            createFile(storage_path("app/temp/creation/{$name}/src") . "/{$package->namePackage}.php", '<?php
+namespace ' . $package->name . '\\' . $package->namePackage . ';
+
+use Illuminate\Support\Facades\Facade;
+
+class ' . $package->namePackage . ' extends Facade
+{
+    protected static function getFacadeAccessor()
+    {
+        return "' . $package->namePackage . '";
+    }
+}
+            ');
+
+            $file->move(storage_path("app/temp/creation/{$name}/src/Commands"), $scriptName);
 
             $package->file = $scriptName;
+
+            fopen(storage_path("app/temp/creation/{$package->namePackage}.zip"), "w");
+            $zip->open(storage_path("app/temp/creation/{$package->namePackage}.zip"), ZipArchive::CREATE);
+            
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator(storage_path("app/temp/creation/{$name}")),
+                \RecursiveIteratorIterator::LEAVES_ONLY
+            );
+
+            foreach ($files as $name => $file)
+            {
+                if (!$file->isDir())
+                {
+                    $filePath = $file->getRealPath();
+                    
+                    $relativePath = substr($filePath, strlen(storage_path("app/temp/creation/{$name}")) + 1);
+
+                    $zip->addFile($filePath, $relativePath);
+                }
+            }
+
+            $zip->close();
+
+            $package->file = $package->namePackage . ".zip";
+            
         }
-        
+
         $package->user_id = auth()->user()->id;
 
         $package->save();
 
-        return Redirect::route('package.index')->with('status', 'package-created');
+        return URL::temporarySignedRoute(
+            'download', now()->addMinutes(5), ['id' => $package->id]
+        );
+        
     }
 }
