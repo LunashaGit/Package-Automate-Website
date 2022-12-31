@@ -8,7 +8,6 @@ export const VendorParameters = {
         inputRequired: true,
         inputDisabled: false,
         inputReadOnly: false,
-        inputAutoFocus: true,
     },
     NamePackage: {
         HTMLTag: "input",
@@ -19,7 +18,6 @@ export const VendorParameters = {
         inputRequired: true,
         inputDisabled: false,
         inputReadOnly: false,
-        inputAutoFocus: true,
     },
     Description: {
         HTMLTag: "textarea",
@@ -29,7 +27,6 @@ export const VendorParameters = {
         inputRequired: true,
         inputDisabled: false,
         inputReadOnly: false,
-        inputAutoFocus: true,
     },
     Type: {
         HTMLTag: "select",
@@ -64,7 +61,6 @@ export const VendorParameters = {
         inputRequired: true,
         inputDisabled: false,
         inputReadOnly: false,
-        inputAutoFocus: true,
     },
     EmailAuthor: {
         HTMLTag: "input",
@@ -75,7 +71,6 @@ export const VendorParameters = {
         inputRequired: true,
         inputDisabled: false,
         inputReadOnly: false,
-        inputAutoFocus: true,
     },
     Stability: {
         HTMLTag: "select",
@@ -114,7 +109,6 @@ export const VendorParameters = {
         inputRequired: true,
         inputDisabled: false,
         inputReadOnly: false,
-        inputAutoFocus: true,
     },
     File: {
         HTMLTag: "input",

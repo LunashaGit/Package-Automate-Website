@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,6 +41,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/package', [VendorController::class, 'index'])->name('package.index');
     Route::post('/package', [VendorController::class, 'store'])->name('package.store');
+});
+
+Route::middleware(['auth', 'verified', 'isAdmin'])->group(function (){
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 });
 
 require __DIR__.'/auth.php';

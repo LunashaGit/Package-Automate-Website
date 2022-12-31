@@ -34,6 +34,16 @@ export default function Authenticated({ auth, header, children }) {
                                 >
                                     Package
                                 </NavLink>
+                                {auth.user.isAdmin === 1 ? (
+                                    <NavLink
+                                        href={route("admin.index")}
+                                        active={route().current("admin.index")}
+                                    >
+                                        Admin
+                                    </NavLink>
+                                ) : (
+                                    <div></div>
+                                )}
                             </div>
                         </div>
 

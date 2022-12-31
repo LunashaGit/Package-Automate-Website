@@ -73,7 +73,6 @@ export default function Form(props) {
                                     required={data[key].inputRequired}
                                     disabled={data[key].inputDisabled}
                                     readOnly={data[key].inputReadOnly}
-                                    autoFocus={data[key].inputAutoFocus}
                                     autoComplete="off"
                                     onChange={handleChange}
                                     {...(data[key].inputType === "file"
