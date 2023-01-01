@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -14,8 +15,13 @@ class AdminController extends Controller
         $this->middleware('isAdmin');
     }
     
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('Admin/Index');
+        return Inertia::render('Admin/Index', [
+            'users' => User::when($request->term, function ($query, $term) {
+                $query->where('name', 'like', '%'.$term.'%')
+                    ->orWhere('email', 'like', '%'.$term.'%');
+            })->paginate()
+        ]);
     }
 }
