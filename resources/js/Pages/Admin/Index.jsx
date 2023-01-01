@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import DefaultLayout from "@/Layouts/DefaultLayout";
 import { Inertia } from "@inertiajs/inertia";
 
 export default function Admin(props) {
@@ -22,7 +22,7 @@ export default function Admin(props) {
         }, 1500);
     };
     return (
-        <AuthenticatedLayout auth={props.auth} errors={props.errors}>
+        <DefaultLayout auth={props.auth} errors={props.errors}>
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -65,6 +65,6 @@ export default function Admin(props) {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </DefaultLayout>
     );
 }

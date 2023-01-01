@@ -22,15 +22,16 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+
+Route::middleware('AuthGuestBoth')->group(function (){
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home.index');
+    Route::get('/package', [VendorController::class, 'index'])->name('package.index');
+    
 });
-Route::middleware(!'auth')->group(function (){
+ 
+
+Route::middleware('guest')->group(function (){
     Route::get('auth/github', [GitHubController::class, 'gitRedirect'])->name('github.login');
     Route::get('auth/github/callback', [GitHubController::class, 'gitCallback'])->name('github.callback');
     Route::get('auth/google', [GoogleController::class, 'googleRedirect'])->name('google.login');
@@ -38,11 +39,9 @@ Route::middleware(!'auth')->group(function (){
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home.index');   
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/package', [VendorController::class, 'index'])->name('package.index');
     Route::post('/package', [VendorController::class, 'store'])->name('package.store');
     Route::get('/download/{id}', [VendorController::class, 'download'])->name('download');
 });

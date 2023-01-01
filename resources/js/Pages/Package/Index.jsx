@@ -1,11 +1,11 @@
 import ButtonPopup from "@/Components/Custom/ButtonPopup";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import DefaultLayout from "@/Layouts/DefaultLayout";
 import { Head } from "@inertiajs/inertia-react";
 import React from "react";
 
 export default function Index(props) {
     return (
-        <AuthenticatedLayout
+        <DefaultLayout
             auth={props.auth}
             errors={props.errors}
             header={
@@ -38,6 +38,6 @@ export default function Index(props) {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </DefaultLayout>
     );
 }

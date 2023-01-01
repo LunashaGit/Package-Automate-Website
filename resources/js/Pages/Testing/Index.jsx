@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import DefaultLayout from "@/Layouts/DefaultLayout";
 import { Head } from "@inertiajs/inertia-react";
 import React from "react";
 import ButtonPopup from "@/Components/Custom/ButtonPopup";
@@ -7,9 +7,10 @@ import Form from "@/Components/Custom/Form";
 import ThreeTest from "@/Components/Custom/ThreeTest";
 import { Inertia } from "@inertiajs/inertia";
 import OnePositionScrollingMenu from "@/Components/Custom/OnePositionScrollingMenu";
+
 export default function Testing(props) {
     return (
-        <AuthenticatedLayout
+        <DefaultLayout
             auth={props.auth}
             errors={props.errors}
             header={
@@ -77,6 +78,6 @@ export default function Testing(props) {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </DefaultLayout>
     );
 }
