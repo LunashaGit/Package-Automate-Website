@@ -23,26 +23,32 @@ export default function Authenticated({ auth, header, children }) {
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink
-                                    href={route("testing.index")}
-                                    active={route().current("testing.index")}
-                                >
-                                    Testing
-                                </NavLink>
-                                <NavLink
                                     href={route("package.index")}
                                     active={route().current("package.index")}
                                 >
                                     Package
                                 </NavLink>
                                 {auth.user.isAdmin === 1 ? (
-                                    <NavLink
-                                        href={route("admin.index")}
-                                        active={route().current("admin.index")}
-                                    >
-                                        Admin
-                                    </NavLink>
+                                    <>
+                                        <NavLink
+                                            href={route("admin.index")}
+                                            active={route().current(
+                                                "admin.index"
+                                            )}
+                                        >
+                                            Admin
+                                        </NavLink>
+                                        <NavLink
+                                            href={route("testing.index")}
+                                            active={route().current(
+                                                "testing.index"
+                                            )}
+                                        >
+                                            Testing
+                                        </NavLink>
+                                    </>
                                 ) : (
-                                    <div></div>
+                                    <></>
                                 )}
                             </div>
                         </div>

@@ -21,10 +21,6 @@ class ProfileController extends Controller
         }
     }
     
-    public function index()
-    {
-        return Inertia::render('Testing/Index');
-    }
     /**
      * Display the user's profile form.
      *
