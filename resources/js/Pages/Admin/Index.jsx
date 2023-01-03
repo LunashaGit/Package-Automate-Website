@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DefaultLayout from "@/Layouts/DefaultLayout";
 import { Inertia } from "@inertiajs/inertia";
-
 export default function Admin(props) {
     const [value, setValue] = useState(() => {
         if (!window.location.href.includes("term")) {

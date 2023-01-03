@@ -24,7 +24,7 @@ class GitHubController extends Controller
             
             if ($Found) {
                 Auth::login($Found);
-                return  Redirect::route('testing.index');
+                return  Redirect::route('home.index');
             }
 
             $user = User::updateOrCreate([
@@ -38,7 +38,7 @@ class GitHubController extends Controller
 
             Auth::login($user);
         
-            return  Redirect::route('testing.index');
+            return  Redirect::route('home.index');
 
     
         } catch (Exception $e) {

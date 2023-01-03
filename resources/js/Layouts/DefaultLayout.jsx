@@ -10,18 +10,18 @@ export default function Default({ auth, header, children }) {
         useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
+        <div className="min-h-screen background">
+            <nav className=" border-">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                <Link href="/home">
+                                    <ApplicationLogo className="block h-10 w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div className="hidden space-x-8 sm:-my-px sm:ml-20 sm:flex">
                                 <NavLink
                                     href={route("home.index")}
                                     active={route().current("home.index")}
@@ -68,7 +68,7 @@ export default function Default({ auth, header, children }) {
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                className="bg-primary inline-flex items-center px-4 py-3 border border-transparent text-sm leading-4 font-medium rounded-full text-gray-700 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 drop-shadow-3xl"
                                             >
                                                 {auth && auth.user
                                                     ? auth.user.name
@@ -176,11 +176,35 @@ export default function Default({ auth, header, children }) {
                 >
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
-                            href={route("testing.index")}
-                            active={route().current("testing.index")}
+                            href={route("home.index")}
+                            active={route().current("home.index")}
                         >
-                            Testing
+                            Home
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("package.index")}
+                            active={route().current("package.index")}
+                        >
+                            Package
+                        </ResponsiveNavLink>
+                        {auth && auth.user && auth.user.isAdmin === 1 ? (
+                            <>
+                                <ResponsiveNavLink
+                                    href={route("admin.index")}
+                                    active={route().current("admin.index")}
+                                >
+                                    Admin
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink
+                                    href={route("testing.index")}
+                                    active={route().current("testing.index")}
+                                >
+                                    Testing
+                                </ResponsiveNavLink>
+                            </>
+                        ) : (
+                            <></>
+                        )}
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">

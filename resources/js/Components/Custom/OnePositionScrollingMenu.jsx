@@ -94,7 +94,7 @@ export default function OnePositionScrollingMenu(props) {
                             />
                         </Transition>
                     ) : (
-                        <div></div>
+                        <></>
                     )}
                 </div>
             </Transition>

@@ -24,6 +24,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@splinetool/react-spline": "^2.2.5",
         "three": "^0.148.0"
     }
 }
