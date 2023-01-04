@@ -17,7 +17,7 @@ export default function Default({ auth, header, children }) {
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/home">
-                                    <ApplicationLogo className="block h-10 w-auto fill-current text-gray-800" />
+                                    <ApplicationLogo className="block h-12 w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
 
@@ -68,7 +68,7 @@ export default function Default({ auth, header, children }) {
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="bg-primary inline-flex items-center px-4 py-3 border border-transparent text-sm leading-4 font-medium rounded-full text-gray-700 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 drop-shadow-3xl"
+                                                className="bg-primary inline-flex items-center px-4 py-3 border border-transparent text-sm leading-4 font-medium rounded-full text-gray-50 hover:text-gray-200 focus:outline-none transition ease-in-out duration-150 drop-shadow-3xl"
                                             >
                                                 {auth && auth.user
                                                     ? auth.user.name

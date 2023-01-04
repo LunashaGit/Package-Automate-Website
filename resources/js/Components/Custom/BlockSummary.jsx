@@ -6,7 +6,7 @@ export default function BlockSummary(props) {
 
     useEffect(() => {
         switch (props.details.title) {
-            case "Vendor":
+            case "Composer":
                 import("@/Components/Custom/img/logo/vendor.png").then(
                     (img) => {
                         setLogo(() => img.default);
@@ -31,7 +31,7 @@ export default function BlockSummary(props) {
     if (!Logo) return null;
 
     return (
-        <div className="bg-[#ffc77e] flex flex-col justify-between items-center sm:max-w-21.5  p-4 rounded-lg drop-shadow-3xl h-72 ">
+        <div className="bg-primary flex flex-col justify-between items-center sm:max-w-21.5  p-4 rounded-lg drop-shadow-3xl h-64 ">
             <img
                 src={Logo}
                 alt={props.details.title}
@@ -41,16 +41,21 @@ export default function BlockSummary(props) {
                 m-moins4"
             />
             <div className="text-center flex flex-col gap-4">
-                <h1 className="text-2xl font-bold text-slate-700">
-                    {props.details.title}
-                </h1>
-                <h3 className="text-sm font-bold text-slate-500">
-                    {props.details.language}
-                </h3>
-                <p className="text-justify max-w-xs">
+                <div className="flex flex-row gap-4 justify-center items-center">
+                    <h1 className="text-2xl font-bold text-neutral-50">
+                        {props.details.title}
+                    </h1>
+                    <h3 className="text-base font-bold text-neutral-100">
+                        {props.details.language}
+                    </h3>
+                </div>
+                <p className="text-justify text-neutral-200 max-w-xs">
                     {props.details.description}
                 </p>
-                <h3 className="text-base font-bold text-slate-900">
+                <h3 className={
+                    props.details.availability === "Available" ? "text-neutral-100 font-bold" : "text-neutral-500 font-bold"
+                    
+                }>
                     {props.details.availability}
                 </h3>
             </div>
