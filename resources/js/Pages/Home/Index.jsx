@@ -44,7 +44,7 @@ export default function Home(props) {
                         <span className="block mx-auto text-right drop-shadow-3xl">
                             <a
                                 href="/package"
-                                className="text-gray-50 bg-primary font-semibold px-4 py-3 mx-6 border border-transparent leading-4 font-medium rounded-full"
+                                className="text-gray-50 bg-primary font-semibold px-4 py-3 mx-6 border border-transparent leading-4 rounded-full"
                             >
                                 Create a Package
                             </a>
