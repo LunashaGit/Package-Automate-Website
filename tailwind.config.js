@@ -18,6 +18,11 @@ module.exports = {
                 primary: "#f0c48c ",
                 secondary: "#FFE5B7",
                 tertiary: "#FF8E00",
+                quaternary: "#706c7c",
+            },
+            borderColor: {
+                primary: "#f0c48c ",
+                secondary: "#706c7c",
             },
             dropShadow: {
                 "2xl": "10px 5px 5px rgb(0 0 0 / 0.6)",
@@ -33,6 +38,7 @@ module.exports = {
             },
             margin: {
                 moins4: "-4rem",
+                moins5: "-5rem",
             },
         },
     },
