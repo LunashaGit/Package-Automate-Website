@@ -103,5 +103,4 @@ const MenuParametersLink = ({ href, method, as, children }) => {
 MenuParameters.Trigger = Trigger;
 MenuParameters.Content = Content;
 MenuParameters.Link = MenuParametersLink;
-
 export default MenuParameters;
