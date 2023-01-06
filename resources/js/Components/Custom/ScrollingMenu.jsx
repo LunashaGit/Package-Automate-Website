@@ -42,7 +42,9 @@ export default function ScrollingMenu(props) {
                     onClose={() => {
                         setPopup(!popup);
                     }}
-                />
+                >
+                    <Popup.Default />
+                </Popup>
             
             
         </div>

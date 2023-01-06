@@ -1,5 +1,4 @@
 import React from "react";
-import { Transition } from "@headlessui/react";
 import Popup from "./Popup";
 export default function ButtonPopup(props) {
     const [showPopup, setShowPopup] = React.useState(false);
@@ -14,7 +13,9 @@ export default function ButtonPopup(props) {
                 </button>
             </div>
             
-                <Popup show={showPopup} parameters={props} onClose={() => setShowPopup(false)} />
+            <Popup show={showPopup} parameters={props} onClose={() => setShowPopup(false)} >
+                <Popup.Default />
+            </Popup>
         </div>
     );
 }

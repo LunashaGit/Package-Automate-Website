@@ -28,7 +28,7 @@ export default function Testing(props) {
                         <div className="p-6 text-gray-900">
                             You're logged in!
                         </div>
-                        {/* <ScrollingMenu /> */}
+                        <ScrollingMenu />
                         <div className="p-6 text-gray-900">
                             <button
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
