@@ -16,7 +16,6 @@ export default function ScrollingMenu(props) {
 
     };
 
-    console.log("ScrollingMenu.jsx: popup = ", popup);
     return (
         <div className="p-6 text-gray-900">
             <MenuParameters>
