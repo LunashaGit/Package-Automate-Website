@@ -1,3 +1,4 @@
+import { Transition } from "@headlessui/react";
 import { useState } from "react";
 import MenuParameters from "./MenuParameters";
 import Popup from "./Popup";
@@ -12,6 +13,7 @@ export default function ScrollingMenu(props) {
         message: "Menu Parameters",
         buttonText: "Close",
         component: "MenuParameters",
+
     };
 
     console.log("ScrollingMenu.jsx: popup = ", popup);
@@ -34,12 +36,16 @@ export default function ScrollingMenu(props) {
                     </button>
                 </MenuParameters.Content>
             </MenuParameters>
-            {popup && (
+            
                 <Popup
                     parameters={parameters}
-                    onClose={() => setPopup(false)}
+                    show={popup}
+                    onClose={() => {
+                        setPopup(!popup);
+                    }}
                 />
-            )}
+            
+            
         </div>
     );
 }

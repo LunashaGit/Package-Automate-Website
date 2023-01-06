@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Form from "./Form";
-
+import { Transition } from "@headlessui/react";
 export default function Popup(props) {
     const [component, setComponent] = useState(null);
 
@@ -18,7 +18,18 @@ export default function Popup(props) {
         }
     }, [props.parameters.component]);
 
+    
     return (
+        <Transition
+            show={props.show}
+            as={React.Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+        >
         <div
             className="fixed z-10 inset-0 overflow-y-auto"
             aria-labelledby="modal-title"
@@ -59,7 +70,7 @@ export default function Popup(props) {
                             </div>
                         </div>
                     </div>
-                    {component ? component : ""}
+                    { component ? component : null }
                     <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                         <button
                             type="button"
@@ -72,5 +83,6 @@ export default function Popup(props) {
                 </div>
             </div>
         </div>
+        </Transition>
     );
 }
