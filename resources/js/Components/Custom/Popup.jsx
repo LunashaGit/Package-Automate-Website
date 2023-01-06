@@ -1,25 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Form from "./Form";
 import { Transition } from "@headlessui/react";
-export default function Popup(props) {
-    const [component, setComponent] = useState(null);
 
-    useEffect(() => {
-        switch (props.parameters.component) {
-            case "FormVendor":
-                setComponent(
-                    <Form name="Vendor" action="/package" method="POST" />
-                );
-                break;
-            case "FormNode":
-                setComponent(<Form name="Node" action="/node" method="POST" />);
-            default:
-                break;
-        }
-    }, [props.parameters.component]);
+const PopupContext = React.createContext();
 
-    
+function Popup(props) {
     return (
+        <PopupContext.Provider value={props}>
         <Transition
             show={props.show}
             as={React.Fragment}
@@ -40,19 +27,43 @@ export default function Popup(props) {
                 <div
                     className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                     aria-hidden="true"
-                ></div>
-                <span
-                    className="hidden sm:inline-block sm:align-middle sm:h-screen"
-                    aria-hidden="true"
-                >
-                    &#8203;
-                </span>
-                <div
+                > </div>
+                    <div
                     className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby="modal-title"
-                >
+                    >
+                        {props.children}
+                    </div>
+                </div>
+            </div>
+        </Transition>
+        </PopupContext.Provider>
+    );
+}
+
+const Default = () => {
+
+    const { show, parameters, onClose } = useContext(PopupContext);
+    const [component, setComponent] = useState(null);
+
+    useEffect(() => {
+        switch (parameters.component) {
+            case "FormVendor":
+                setComponent(
+                    <Form name="Vendor" action="/package" method="POST" />
+                );
+                break;
+            case "FormNode":
+                setComponent(<Form name="Node" action="/node" method="POST" />);
+            default:
+                break;
+        }
+    }, [parameters.component]);
+
+    return (
+            <>
                     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div className="sm:flex sm:items-start">
                             <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
@@ -60,11 +71,11 @@ export default function Popup(props) {
                                     className="text-lg leading-6 font-medium text-gray-900"
                                     id="modal-title"
                                 >
-                                    {props.parameters.title}
+                                    {parameters.title}
                                 </h3>
                                 <div className="mt-2">
                                     <p className="text-sm text-gray-500">
-                                        {props.parameters.message}
+                                        {parameters.message}
                                     </p>
                                 </div>
                             </div>
@@ -75,14 +86,36 @@ export default function Popup(props) {
                         <button
                             type="button"
                             className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                            onClick={props.onClose}
+                            onClick={onClose}
                         >
-                            {props.parameters.buttonText}
+                            {parameters.buttonText}
                         </button>
                     </div>
-                </div>
+                    </>
+    );
+
+}
+
+const Personalized = ({children}) => {
+    const { show, parameters, onClose } = useContext(PopupContext);
+    console.log(children)
+    return (
+        <div className="bg-white w-full sm:max-w-md mt-6 px-6 py-4 p-4 sm:rounded-lg mx-auto">
+            <children.type >{children.props.children}</children.type>
+            <div className="bg-gray-50 py-3 sm:flex sm:flex-row-reverse">
+            <button
+                type="button"
+                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                onClick={onClose}
+            >
+                {parameters.buttonText}
+            </button>
             </div>
         </div>
-        </Transition>
-    );
+        
+    )
 }
+
+Popup.Default = Default;
+Popup.Personalized = Personalized;  
+export default Popup;

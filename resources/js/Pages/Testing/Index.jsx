@@ -7,8 +7,19 @@ import Form from "@/Components/Custom/Form";
 import ThreeTest from "@/Components/Custom/ThreeTest";
 import { Inertia } from "@inertiajs/inertia";
 import OnePositionScrollingMenu from "@/Components/Custom/OnePositionScrollingMenu";
+import Popup from "@/Components/Custom/Popup";
+import Login from "@/Components/Custom/Login";
 
 export default function Testing(props) {
+    const [showPopupSimple, setShowPopupSimple] = React.useState(false);
+    const [showPopupPersonalize, setShowPopupPersonalize] = React.useState(false);
+    const parameters = {
+        button: "Menu Parameters",
+        title: "Menu Parameters",
+        message: "Menu Parameters",
+        buttonText: "Close",
+        component: "MenuParameters",
+    };
     return (
         <DefaultLayout auth={props.auth} errors={props.errors}>
             <div className="py-12">
@@ -17,8 +28,44 @@ export default function Testing(props) {
                         <div className="p-6 text-gray-900">
                             You're logged in!
                         </div>
-                        <ScrollingMenu />
-                        <div>
+                        {/* <ScrollingMenu /> */}
+                        <div className="p-6 text-gray-900">
+                            <button
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                onClick={() => setShowPopupSimple(true)}
+                            >
+                                Simple
+                            </button>
+                                    
+                            <Popup
+                                show={showPopupSimple}
+                                parameters={parameters}
+                                onClose={() => setShowPopupSimple(false)}
+                                >
+                                <Popup.Default
+                                />
+                            </Popup>
+                        </div>
+                        <div className="p-6 text-gray-900">
+                            <button
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                onClick={() => setShowPopupPersonalize(true)}
+                            >
+                                Simple
+                            </button>
+                                    
+                            <Popup
+                                show={showPopupPersonalize}
+                                parameters={parameters}
+                                onClose={() => setShowPopupPersonalize(false)}
+                                >
+                                <Popup.Personalized
+                                >
+                                    <Login />
+                                </Popup.Personalized>
+                            </Popup>
+                        </div>
+                        {/* <div>
                             <ButtonPopup
                                 title="Popup Title"
                                 message="Popup Message"
@@ -32,7 +79,7 @@ export default function Testing(props) {
                                 button="With Component"
                                 component="FormNode"
                             />
-                        </div>
+                        </div> */}
                         <div className="p-6 text-gray-900">
                             {props.url ? (
                                 <a href={props.url}>
