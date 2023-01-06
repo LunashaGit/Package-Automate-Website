@@ -13,17 +13,8 @@ export default function ButtonPopup(props) {
                     {props.button}
                 </button>
             </div>
-            <Transition
-                show={showPopup}
-                enter="transition-opacity duration-900"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity duration-900"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-            >
-                <Popup parameters={props} onClose={() => setShowPopup(false)} />
-            </Transition>
+            
+                <Popup show={showPopup} parameters={props} onClose={() => setShowPopup(false)} />
         </div>
     );
 }
