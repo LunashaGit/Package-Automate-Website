@@ -4,10 +4,19 @@ import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/inertia-react";
-
+import Popup from "@/Components/Custom/Popup";
+import Login from "@/Components/Custom/Login";
+import Register from "@/Components/Custom/Register";
 export default function Default({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
+    const [login, setLogin] = useState(false);
+    const [register, setRegister] = useState(false);
+
+    const parameters = {
+        buttonText: "Close",
+        component: "null",
+    };
 
     return (
         <div className="min-h-screen background">
@@ -108,16 +117,22 @@ export default function Default({ auth, header, children }) {
                                             </>
                                         ) : (
                                             <>
-                                                <Dropdown.Link
-                                                    href={route("login")}
+                                                <button
+                                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                                                    onClick={() => {
+                                                        setLogin(!login);
+                                                    }}
                                                 >
                                                     Login
-                                                </Dropdown.Link>
-                                                <Dropdown.Link
-                                                    href={route("register")}
+                                                </button>
+                                                <button
+                                                    className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                                                    onClick={() => {
+                                                        setRegister(!register);
+                                                    }}
                                                 >
                                                     Register
-                                                </Dropdown.Link>
+                                                </button>
                                             </>
                                         )}
                                     </Dropdown.Content>
@@ -257,6 +272,28 @@ export default function Default({ auth, header, children }) {
             )}
 
             <main>{children}</main>
+            <Popup
+                parameters={parameters}
+                show={login}
+                onClose={() => {
+                    setLogin(!login);
+                }}
+            >
+                <Popup.Personalized>
+                    <Login />
+                </Popup.Personalized>
+            </Popup>
+            <Popup
+                parameters={parameters}
+                show={register}
+                onClose={() => {
+                    setRegister(!register);
+                }}
+            >
+                <Popup.Personalized>
+                    <Register />
+                </Popup.Personalized>
+            </Popup>
         </div>
     );
 }

@@ -9,10 +9,13 @@ import { Inertia } from "@inertiajs/inertia";
 import OnePositionScrollingMenu from "@/Components/Custom/OnePositionScrollingMenu";
 import Popup from "@/Components/Custom/Popup";
 import Login from "@/Components/Custom/Login";
+import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/prism";
+import { docco } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 export default function Testing(props) {
     const [showPopupSimple, setShowPopupSimple] = React.useState(false);
-    const [showPopupPersonalize, setShowPopupPersonalize] = React.useState(false);
+    const [showPopupPersonalize, setShowPopupPersonalize] =
+        React.useState(false);
     const parameters = {
         button: "Menu Parameters",
         title: "Menu Parameters",
@@ -36,14 +39,13 @@ export default function Testing(props) {
                             >
                                 Simple
                             </button>
-                                    
+
                             <Popup
                                 show={showPopupSimple}
                                 parameters={parameters}
                                 onClose={() => setShowPopupSimple(false)}
-                                >
-                                <Popup.Default
-                                />
+                            >
+                                <Popup.Default />
                             </Popup>
                         </div>
                         <div className="p-6 text-gray-900">
@@ -53,18 +55,32 @@ export default function Testing(props) {
                             >
                                 Simple
                             </button>
-                                    
+
                             <Popup
                                 show={showPopupPersonalize}
                                 parameters={parameters}
                                 onClose={() => setShowPopupPersonalize(false)}
-                                >
-                                <Popup.Personalized
-                                >
+                            >
+                                <Popup.Personalized>
                                     <Login />
                                 </Popup.Personalized>
                             </Popup>
                         </div>
+                        <SyntaxHighlighter language="jsx" style={docco}>
+                            {`
+                            const [showPopupSimple, setShowPopupSimple] = React.useState(false);
+                            const [showPopupPersonalize, setShowPopupPersonalize] =
+                                React.useState(false);
+                            const parameters = {
+                                button: "Menu Parameters",
+                                title: "Menu Parameters",
+                                message: "Menu Parameters",
+                                buttonText: "Close",
+                                component: "MenuParameters",
+                            };
+                            `}
+                        </SyntaxHighlighter>
+
                         {/* <div>
                             <ButtonPopup
                                 title="Popup Title"

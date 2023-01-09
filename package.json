@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@splinetool/react-spline": "^2.2.5",
+        "react-syntax-highlighter": "^15.5.0",
         "three": "^0.148.0"
     }
 }
