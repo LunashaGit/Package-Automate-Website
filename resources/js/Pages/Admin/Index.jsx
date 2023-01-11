@@ -1,25 +1,40 @@
 import React, { useEffect, useState } from "react";
 import DefaultLayout from "@/Layouts/DefaultLayout";
 import { Inertia } from "@inertiajs/inertia";
-export default function Admin(props) {
-    const [value, setValue] = useState(() => {
-        if (!window.location.href.includes("term")) {
-            localStorage.removeItem("search");
-        }
-        return localStorage.getItem("search") || "";
-    });
+import Axios from "axios";
 
+export default function Admin(props) {
+    const [value, setValue] = useState("");
+    const [data, setData] = useState([]);
     useEffect(() => {
-        localStorage.setItem("search", value);
+        setTimeout(() => {
+        if(value.length > 0){
+            Axios.get("/api/users", {
+                params: {
+                    term: value,
+                },
+            })
+                .then((res) => {
+                    console.log(res.data.data);
+                    setData(res.data.data);
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        } else {
+            Axios.get("/api/users")
+            .then((res) => {
+                console.log(res.data.data);
+                setData(res.data.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        }},300);
+        
     }, [value]);
 
-    const search = (e) => {
-        setTimeout(() => {
-            Inertia.get(route("admin.index"), {
-                term: e,
-            });
-        }, 1500);
-    };
+
     return (
         <DefaultLayout auth={props.auth} errors={props.errors}>
             <div className="py-12">
@@ -46,13 +61,12 @@ export default function Admin(props) {
                                 className="border-2 border-gray-300 p-2 w-full rounded-lg"
                                 value={value}
                                 onChange={(e) => {
-                                    setValue(e.target.value),
-                                        search(e.target.value);
+                                    setValue(e.target.value);
                                 }}
                             />
                         </div>
                         <div className="p-6 bg-white border-b border-gray-200">
-                            {props.users.data.map((user) => (
+                            {data && data.map((user) => (
                                 <div key={user.id}>
                                     <hr />
                                     <h1>Name : {user.name}</h1>

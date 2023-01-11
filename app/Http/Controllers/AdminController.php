@@ -17,11 +17,6 @@ class AdminController extends Controller
     
     public function index(Request $request)
     {
-        return Inertia::render('Admin/Index', [
-            'users' => User::when($request->term, function ($query, $term) {
-                $query->where('name', 'like', '%'.$term.'%')
-                    ->orWhere('email', 'like', '%'.$term.'%');
-            })->paginate()
-        ]);
+        return Inertia::render('Admin/Index');
     }
 }
