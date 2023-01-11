@@ -74,6 +74,11 @@ export default function Admin(props) {
                                     <hr />
                                 </div>
                             ))}
+                            {data.length == 0 && (
+                                <div>
+                                    <h1 className="text-red-500">No Data</h1>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
